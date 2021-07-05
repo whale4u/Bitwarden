@@ -29,9 +29,14 @@ export default {
   },
   methods: {
     handleLogin() {
+      const that = this
       axios.post('/home/login', JSON.stringify(this.login))
         .then(function (response) {
-          console.log(response)
+          // console.log(response.data.data.token)
+          if (response.data && response.data.data && response.data.data.token) {
+            localStorage.setItem('cache-token', response.data.data.token)
+            that.$router.replace('/')
+          }
         })
         .catch(function (error) {
           console.log(error)
